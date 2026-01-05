@@ -1,9 +1,12 @@
-import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { syncService } from "./store/syncService";
+
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import { ThemeProvider } from "@/components/ui/ThemeProvider/ThemeProvider";
+import "@/global.css";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -13,16 +16,18 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <ThemeProvider value={DefaultTheme}>
-      <SafeAreaView
-        edges={["top"]}
-        style={{ flex: 1, backgroundColor: "white" }}
-      >
-        <Stack initialRouteName="(auth)">
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
-      </SafeAreaView>
-    </ThemeProvider>
+    <GluestackUIProvider mode="dark">
+      <ThemeProvider>
+        <SafeAreaView
+          edges={["top"]}
+          style={{ flex: 1, backgroundColor: "white" }}
+        >
+          <Stack initialRouteName="(auth)">
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+        </SafeAreaView>
+      </ThemeProvider>
+    </GluestackUIProvider>
   );
 }
